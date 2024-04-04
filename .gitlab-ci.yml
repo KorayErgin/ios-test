@@ -1,0 +1,23 @@
+variables:
+    http_proxy: $CODE_PROXY
+    https_proxy: $CODE_PROXY
+    no_proxy: .siemens.com
+
+
+make_and_package:
+    stage: build
+    image: node:16-bullseye
+    script:
+        - apt update && apt install -y make bzip2 fakeroot  dpkg-dev debhelper nodejs build-essential
+        - npm install
+        - make
+        - dpkg-checkbuilddeps
+        - dpkg-buildpackage -A -rfakeroot -us -uc -tc
+        - cp ../jitsi-meet-web_1.0.1-1_all.deb .
+        - find / -iname jitsi-meet-web*
+    artifacts:
+        paths:
+            - jitsi-meet-web_1.0.1-1_all.deb
+    only:
+        - master
+        - tags

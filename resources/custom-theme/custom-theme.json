@@ -95,8 +95,7 @@
          "fontSize": 16,
          "lineHeight": 24,
          "fontWeight": "600",
-         "letterSpacing": 0,
-         "fontFamily": "SiemensSans_Global"
+         "letterSpacing": 0
       },
       "bodyLongRegular": {
          "fontSize": 14,

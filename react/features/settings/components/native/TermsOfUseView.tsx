@@ -1,11 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
+
 import React, { useCallback, useLayoutEffect } from "react";
 import {
   ScrollView,
   Platform,
   View,
-  ViewStyle,
-} from "react-native";
+  ViewStyle} from "react-native";
 import i18next from "../../../base/i18n/i18next";
 import { IconArrowLeft } from "../../../base/icons/svg";
 import JitsiScreen from "../../../base/modal/components/JitsiScreen";
@@ -16,11 +16,13 @@ import {
   navigate,
 } from "../../../mobile/navigation/components/settings/SettingsNavigationContainerRef";
 import { screen } from "../../../mobile/navigation/routes";
-import { WebView } from "react-native-webview";
 import styles from "./styles";
+import { WebView } from "react-native-webview";
 
 const TermsOfUseView = ( { isInWelcomePage }: { isInWelcomePage?: boolean } ) => {
   const navigation = useNavigation();
+  const htmlContent = require('../ReadMe_OSS.html');
+
   const headerLeft = () => (
     <HeaderNavigationButton
       color={BaseThemeNative.palette.link01}
@@ -59,8 +61,10 @@ const TermsOfUseView = ( { isInWelcomePage }: { isInWelcomePage?: boolean } ) =>
         <View style={styles.contentOption as ViewStyle}>
           <WebView
             source={{
-              uri: Platform.OS === 'ios'?(i18next.language==='de'? "file:///android_asset/html/LKB23992-ios-de.html":"file:///android_asset/html/LKB19283-ios-en.html" ): (i18next.language==='de'? "file:///android_asset/html/LKB23991-android-de.html":"file:///android_asset/html/LKB19282-android-en.html" ) ,
+              uri: 'assets/html/ReadMe_OSS.html'
             }}
+            allowFileAccess={true} // Allow loading local files
+        allowFileAccessFromFileURLs={true} // Allow loading file:// URLs
             onError={(error) => console.error("WebView error:", error)}
           />
         </View>

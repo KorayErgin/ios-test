@@ -180,14 +180,12 @@ export const spacing
     = [ 0, 4, 8, 16, 24, 32, 40, 52, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128 ];
 
 export const typography = {
-    fontFamily: 'SiemensSans_Global',
 
     labelRegular: {
         fontSize: 12,
         lineHeight: 16,
         fontWeight: font.weightRegular,
         letterSpacing: 0.16,
-        fontFamily: 'SiemensSans_Global'
     },
 
     labelBold: {
@@ -195,7 +193,6 @@ export const typography = {
         lineHeight: 16,
         fontWeight: font.weightSemiBold,
         letterSpacing: 0.16,
-        fontFamily: 'SiemensSans_Global'
     },
 
     bodyShortRegular: {
@@ -203,7 +200,6 @@ export const typography = {
         lineHeight: 20,
         fontWeight: font.weightRegular,
         letterSpacing: 0,
-        fontFamily: 'SiemensSans_Global'
     },
 
     bodyShortBold: {
@@ -211,7 +207,7 @@ export const typography = {
         lineHeight: 20,
         fontWeight: font.weightSemiBold,
         letterSpacing: 0,
-        fontFamily: 'SiemensSans_Global',
+        
     },
 
     bodyShortRegularLarge: {
@@ -219,7 +215,7 @@ export const typography = {
         lineHeight: 22,
         fontWeight: font.weightRegular,
         letterSpacing: 0,
-        fontFamily: 'SiemensSans_Global',
+        
     },
 
     bodyShortBoldLarge: {
@@ -227,7 +223,7 @@ export const typography = {
         lineHeight: 22,
         fontWeight: font.weightSemiBold,
         letterSpacing: 0,
-        fontFamily: 'SiemensSans_Global',
+        
     },
 
     bodyLongRegular: {
@@ -235,7 +231,7 @@ export const typography = {
         lineHeight: 24,
         fontWeight: font.weightRegular,
         letterSpacing: 0,
-        fontFamily: 'SiemensSans_Global',
+        
     },
 
     bodyLongRegularLarge: {
@@ -243,7 +239,7 @@ export const typography = {
         lineHeight: 26,
         fontWeight: font.weightRegular,
         letterSpacing: 0,
-        fontFamily: 'SiemensSans_Global',
+        
     },
 
     bodyLongBold: {
@@ -251,7 +247,7 @@ export const typography = {
         lineHeight: 24,
         fontWeight: font.weightSemiBold,
         letterSpacing: 0,
-        fontFamily: 'SiemensSans_Global',
+        
     },
 
     bodyLongBoldLarge: {
@@ -259,7 +255,7 @@ export const typography = {
         lineHeight: 26,
         fontWeight: font.weightSemiBold,
         letterSpacing: 0,
-        fontFamily: 'SiemensSans_Global',
+        
     },
 
     heading1: {
@@ -267,7 +263,7 @@ export const typography = {
         lineHeight: 64,
         fontWeight: font.weightSemiBold,
         letterSpacing: 0,
-        fontFamily: 'SiemensSans_Global',
+        
     },
 
     heading2: {
@@ -275,7 +271,7 @@ export const typography = {
         lineHeight: 50,
         fontWeight: font.weightSemiBold,
         letterSpacing: 0,
-        fontFamily: 'SiemensSans_Global',
+        
     },
 
     heading3: {
@@ -283,7 +279,7 @@ export const typography = {
         lineHeight: 40,
         fontWeight: font.weightSemiBold,
         letterSpacing: 0,
-        fontFamily: 'SiemensSans_Global',
+        
     },
 
     heading4: {
@@ -291,7 +287,7 @@ export const typography = {
         lineHeight: 36,
         fontWeight: font.weightSemiBold,
         letterSpacing: 0,
-        fontFamily: 'SiemensSans_Global',
+        
     },
 
     heading5: {
@@ -299,7 +295,7 @@ export const typography = {
         lineHeight: 28,
         fontWeight: font.weightSemiBold,
         letterSpacing: 0,
-        fontFamily: 'SiemensSans_Global',
+        
     },
 
     heading6: {
@@ -307,7 +303,7 @@ export const typography = {
         lineHeight: 26,
         fontWeight: font.weightSemiBold,
         letterSpacing: 0,
-        fontFamily: 'SiemensSans_Global',
+        
     }
 };
 

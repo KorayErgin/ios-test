@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useCallback, useLayoutEffect } from "react";
+import RNFS from 'react-native-fs';
+import React, { useCallback, useLayoutEffect, useEffect, useState } from "react";
 import {
   ScrollView,
   View,
@@ -20,6 +21,7 @@ import styles from "./styles";
 
 const OpenSourceLicensesView = ( { isInWelcomePage }: { isInWelcomePage?: boolean } ) => {
   const navigation = useNavigation();
+  const [htmlContent, setHtmlContent] = useState<string | null>(null);
   const headerLeft = () => (
     <HeaderNavigationButton
       color={BaseThemeNative.palette.link01}
@@ -42,6 +44,19 @@ const OpenSourceLicensesView = ( { isInWelcomePage }: { isInWelcomePage?: boolea
     },
     [i18next]
   );
+  useEffect(() => {
+    const loadHtmlFile = async () => {
+      try {
+        const filePath = `${RNFS.MainBundlePath}/test.html`;
+        const content = await RNFS.readFile(filePath, 'utf8');
+        setHtmlContent(content);
+      } catch (error) {
+        console.error("Error reading HTML file:", error);
+      }
+    };
+
+    loadHtmlFile();
+  }, []);
 
   return (
     <JitsiScreen
@@ -57,10 +72,16 @@ const OpenSourceLicensesView = ( { isInWelcomePage }: { isInWelcomePage?: boolea
         contentContainerStyle={styles.profileView as ViewStyle}
       >
         <View style={styles.contentOption as ViewStyle}>
-          <WebView
-            source={{ uri: "file:///android_asset/html/ReadMe_OSS.html" }}
-            onError={(error) => console.error("WebView error:", error)}
-          />
+          {htmlContent ? (
+            <WebView
+              originWhitelist={['*']}
+              source={{ html: htmlContent }}
+              style={{ flex: 1, height: 500 }} // Adjust height as needed
+            />
+          ) : (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            </View>
+          )}
         </View>
       </ScrollView>
     </JitsiScreen>

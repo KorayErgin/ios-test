@@ -1,11 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
-import RNFS from 'react-native-fs';
 import React, { useCallback, useLayoutEffect, useEffect, useState } from "react";
 import {
   ScrollView,
   Platform,
   View,
-  ViewStyle
+  ViewStyle,
 } from "react-native";
 import i18next from "../../../base/i18n/i18next";
 import { IconArrowLeft } from "../../../base/icons/svg";
@@ -17,13 +16,12 @@ import {
   navigate,
 } from "../../../mobile/navigation/components/settings/SettingsNavigationContainerRef";
 import { screen } from "../../../mobile/navigation/routes";
-import styles from "./styles";
 import { WebView } from "react-native-webview";
+import styles from "./styles";
 
-const TermsOfUseView = ({ isInWelcomePage }: { isInWelcomePage?: boolean }) => {
+const TermsOfUseView = ( { isInWelcomePage }: { isInWelcomePage?: boolean } ) => {
   const navigation = useNavigation();
   const [htmlContent, setHtmlContent] = useState<string | null>(null);
-
   const headerLeft = () => (
     <HeaderNavigationButton
       color={BaseThemeNative.palette.link01}
@@ -46,25 +44,25 @@ const TermsOfUseView = ({ isInWelcomePage }: { isInWelcomePage?: boolean }) => {
     },
     [i18next]
   );
-
-  useEffect(() => {
-    const loadHtmlFile = async () => {
-      try {
-        const filePath = `${RNFS.MainBundlePath}/ReadMe_OSS.html`;
-        const content = await RNFS.readFile(filePath, 'utf8');
-        setHtmlContent(content);
-      } catch (error) {
-        console.error("Error reading HTML file:", error);
+   useEffect(() => {
+      const loadHtmlFile = async () => {
+      if(Platform.OS === 'ios'){
+         const RNFSLib = require('react-native-fs'); // Inline require for iOS only
+         const filePath = i18next.language==='de'? `${RNFSLib.MainBundlePath}/LKB23992-ios-de.html`:`${RNFSLib.MainBundlePath}/LKB19283-ios-en.html`;
+         const content = await RNFSLib.readFile(filePath, 'utf8');
+         setHtmlContent(content);
       }
-    };
+      };
 
-    loadHtmlFile();
-  }, []);
-
+      loadHtmlFile();
+    }, []);
   return (
     <JitsiScreen
       disableForcedKeyboardDismiss={true}
- 
+      // @ts-ignore
+      safeAreaInsets={[!isInWelcomePage && "bottom", "left", "right"].filter(
+        Boolean
+      )}
       style={styles.settingsViewContainer}
     >
       <ScrollView
@@ -72,16 +70,24 @@ const TermsOfUseView = ({ isInWelcomePage }: { isInWelcomePage?: boolean }) => {
         contentContainerStyle={styles.profileView as ViewStyle}
       >
         <View style={styles.contentOption as ViewStyle}>
-          {htmlContent ? (
-            <WebView
-              originWhitelist={['*']}
-              source={{ html: htmlContent }}
-              style={{ flex: 1, height: 500 }} // Adjust height as needed
-            />
-          ) : (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            </View>
-          )}
+
+        {Platform.OS === 'android' ? (
+           <WebView source={{ uri:  (i18next.language==='de'? "file:///android_asset/html/LKB23991-android-de.html":"file:///android_asset/html/LKB19282-android-en.html" ) }}
+            onError={(error) => console.error("WebView error:", error)} />
+      ) : (
+        htmlContent ? (
+          <WebView
+            originWhitelist={['*']}
+            source={{ html: htmlContent }}
+          />
+        ) : (
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            {/* This will show when htmlContent is not available */}
+          </View>
+        )
+      )}
+
+
         </View>
       </ScrollView>
     </JitsiScreen>

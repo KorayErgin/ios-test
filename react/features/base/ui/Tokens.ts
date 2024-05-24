@@ -180,12 +180,14 @@ export const spacing
     = [ 0, 4, 8, 16, 24, 32, 40, 52, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128 ];
 
 export const typography = {
+    
 
     labelRegular: {
         fontSize: 12,
         lineHeight: 16,
         fontWeight: font.weightRegular,
         letterSpacing: 0.16,
+        
     },
 
     labelBold: {
@@ -193,6 +195,7 @@ export const typography = {
         lineHeight: 16,
         fontWeight: font.weightSemiBold,
         letterSpacing: 0.16,
+        
     },
 
     bodyShortRegular: {
@@ -200,6 +203,7 @@ export const typography = {
         lineHeight: 20,
         fontWeight: font.weightRegular,
         letterSpacing: 0,
+        
     },
 
     bodyShortBold: {

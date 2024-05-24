@@ -165,18 +165,7 @@ function getConfig(options = {}) {
                     configFile: 'tsconfig.web.json',
                     transpileOnly: !isProduction // Skip type checking for dev builds.,
                 }
-            } ,
-        
-            {
-                test: /\.(html)$/,
-                use: {
-                  loader: 'html-loader',
-                  options: {
-                    attrs: [':data-src']
-                  }
-                }
-              }
-        ]
+            } ]
         },
         node: {
             // Allow the use of the real filename of the module being executed. By

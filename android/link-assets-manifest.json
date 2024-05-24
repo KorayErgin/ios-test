@@ -1,6 +1,37 @@
 {
   "migIndex": 1,
   "data": [
-
+    {
+      "path": "assets/fonts/SiemensSans_Global_Bold.ttf",
+      "sha1": "5c9882122cf7bd92509fd4ddedc718defd21b5ae"
+    },
+    {
+      "path": "assets/fonts/SiemensSans_Global_BoldItalic.ttf",
+      "sha1": "db6366c86bb0acd9225ca13c82bfaecbe5258a19"
+    },
+    {
+      "path": "assets/fonts/SiemensSans_Global_Italic.ttf",
+      "sha1": "830d5d8e92cd77ad569ffd38e9aaf276bbb2ec16"
+    },
+    {
+      "path": "assets/fonts/SiemensSans_Global_JPN_Bold.ttf",
+      "sha1": "7d807a69d7b5ffc4890a6eec877d72c54f326bd8"
+    },
+    {
+      "path": "assets/fonts/SiemensSans_Global_JPN_BoldItalic.ttf",
+      "sha1": "17ffb2d324bd029a24116c1fdb2f522c87c30de2"
+    },
+    {
+      "path": "assets/fonts/SiemensSans_Global_JPN_Italic.ttf",
+      "sha1": "65d696f84f38d683d226beb74f7a62aff970cac1"
+    },
+    {
+      "path": "assets/fonts/SiemensSans_Global_JPN_Roman.ttf",
+      "sha1": "c44e1612bcc78d476f5617706c0dada26c67f802"
+    },
+    {
+      "path": "assets/fonts/SiemensSans_Global_Roman.ttf",
+      "sha1": "746f29bd1c69eafb5cff499cf61b2c173b2a3126"
+    }
   ]
 }

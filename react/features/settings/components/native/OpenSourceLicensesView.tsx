@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
-import RNFS from 'react-native-fs';
 import React, { useCallback, useLayoutEffect, useEffect, useState } from "react";
 import {
+  Platform,
   ScrollView,
   View,
   ViewStyle,
@@ -22,6 +22,7 @@ import styles from "./styles";
 const OpenSourceLicensesView = ( { isInWelcomePage }: { isInWelcomePage?: boolean } ) => {
   const navigation = useNavigation();
   const [htmlContent, setHtmlContent] = useState<string | null>(null);
+
   const headerLeft = () => (
     <HeaderNavigationButton
       color={BaseThemeNative.palette.link01}
@@ -46,18 +47,16 @@ const OpenSourceLicensesView = ( { isInWelcomePage }: { isInWelcomePage?: boolea
   );
   useEffect(() => {
     const loadHtmlFile = async () => {
-      try {
-        const filePath = `${RNFS.MainBundlePath}/test.html`;
-        const content = await RNFS.readFile(filePath, 'utf8');
-        setHtmlContent(content);
-      } catch (error) {
-        console.error("Error reading HTML file:", error);
-      }
+    if(Platform.OS === 'ios'){
+       const RNFSLib = require('react-native-fs'); // Inline require for iOS only
+       const filePath = i18next.language==='de'? `${RNFSLib.MainBundlePath}/ReadMe_OSS.html`:`${RNFSLib.MainBundlePath}/ReadMe_OSS.html`;
+       const content = await RNFSLib.readFile(filePath, 'utf8');
+       setHtmlContent(content);
+    }
     };
 
     loadHtmlFile();
   }, []);
-
   return (
     <JitsiScreen
       disableForcedKeyboardDismiss={true}
@@ -72,16 +71,25 @@ const OpenSourceLicensesView = ( { isInWelcomePage }: { isInWelcomePage?: boolea
         contentContainerStyle={styles.profileView as ViewStyle}
       >
         <View style={styles.contentOption as ViewStyle}>
-          {htmlContent ? (
-            <WebView
-              originWhitelist={['*']}
-              source={{ html: htmlContent }}
-              style={{ flex: 1, height: 500 }} // Adjust height as needed
-            />
-          ) : (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            </View>
-          )}
+           {Platform.OS === 'android' ? (
+                       <WebView source={{ uri: "file:///android_asset/html/ReadMe_OSS.html" }}
+                               onError={(error) => console.error("WebView error:", error)} />
+              ) : (
+                htmlContent ? (
+                  <WebView
+                    originWhitelist={['*']}
+                    source={{ html: htmlContent }}
+                  />
+                ) : (
+                  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    {/* This will show when htmlContent is not available */}
+                  </View>
+                )
+              )}
+
+
+
+
         </View>
       </ScrollView>
     </JitsiScreen>

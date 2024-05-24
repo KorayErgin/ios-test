@@ -1,8 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
-import RNFS from 'react-native-fs';
 import React, { useCallback, useLayoutEffect, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
+  Platform,
   ScrollView,
   View,
   ViewStyle
@@ -52,19 +52,17 @@ const PrivacyNoticeView = ( { isInWelcomePage }: { isInWelcomePage?: boolean } )
     [i18next]
   );
   useEffect(() => {
-    const loadHtmlFile = async () => {
-      try {
-        const filePath = `${RNFS.MainBundlePath}/ReadMe_OSS.html`;
-        const content = await RNFS.readFile(filePath, 'utf8');
-        setHtmlContent(content);
-      } catch (error) {
-        console.error("Error reading HTML file:", error);
+      const loadHtmlFile = async () => {
+      if(Platform.OS === 'ios'){
+         const RNFSLib = require('react-native-fs'); // Inline require for iOS only
+         const filePath = i18next.language==='de'? `${RNFSLib.MainBundlePath}/mmm-resdasdadasdsadmote_dataprivacynotice_en.html`:`${RNFSLib.MainBundlePath}/mmm-remote_dataprivacynotice_en.html`;
+         const content = await RNFSLib.readFile(filePath, 'utf8');
+         setHtmlContent(content);
       }
-    };
+      };
 
-    loadHtmlFile();
-  }, []);
-
+      loadHtmlFile();
+    }, []);
   return (
     <JitsiScreen
       disableForcedKeyboardDismiss={true}
@@ -79,16 +77,21 @@ const PrivacyNoticeView = ( { isInWelcomePage }: { isInWelcomePage?: boolean } )
         contentContainerStyle={styles.profileView as ViewStyle}
       >
         <View style={styles.contentOption as ViewStyle}>
-        {htmlContent ? (
-            <WebView
-              originWhitelist={['*']}
-              source={{ html: htmlContent }}
-              style={{ flex: 1, height: 500 }} // Adjust height as needed
-            />
-          ) : (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            </View>
-          )}
+        {Platform.OS === 'android' ? (
+                               <WebView source={{ uri: "file:///android_asset/html/mmm-remote_dataprivacynotice_en.html" }}
+                                       onError={(error) => console.error("WebView error:", error)} />
+                      ) : (
+                        htmlContent ? (
+                          <WebView
+                            originWhitelist={['*']}
+                            source={{ html: htmlContent }}
+                          />
+                        ) : (
+                          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                            {/* This will show when htmlContent is not available */}
+                          </View>
+                        )
+                      )}
         </View>
       </ScrollView>
     </JitsiScreen>

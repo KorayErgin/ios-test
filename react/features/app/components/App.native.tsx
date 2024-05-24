@@ -1,10 +1,9 @@
 import React, { ComponentType } from 'react';
 import { NativeModules, Platform, StyleSheet, View ,PermissionsAndroid} from 'react-native';
-import { PERMISSIONS, request, check } from 'react-native-permissions';
 import DeviceInfo from 'react-native-device-info';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
-
+import { request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import BottomSheetContainer from '../../base/dialog/components/native/BottomSheetContainer';
 import DialogContainer from '../../base/dialog/components/native/DialogContainer';
 import { updateFlags } from '../../base/flags/actions';
@@ -84,19 +83,18 @@ export class App extends AbstractApp<IProps> {
     };
 
    async  requestCameraAndMicPermissionsIOS(){
-    try {
-        const permissionCamStatus = await request(
-          Platform.OS === 'ios' ? PERMISSIONS.IOS.CAMERA : PERMISSIONS.ANDROID.CAMERA
-        );
+      try {
+        const micStatus = await request(PERMISSIONS.IOS.MICROPHONE);
+        const cameraStatus = await request(PERMISSIONS.IOS.CAMERA);
 
-        const permissionMicStatus = await request(
-            Platform.OS === 'ios' ? PERMISSIONS.IOS.MICROPHONE : PERMISSIONS.ANDROID.RECORD_AUDIO
-          );
-        console.log('Camera permission status:', permissionCamStatus);
-        console.log('Mic permission status:', permissionMicStatus);
-
+        if (cameraStatus === RESULTS.GRANTED&& micStatus === RESULTS.GRANTED) {
+          // Permissions granted, you can use camera and microphone
+          console.log("permissions OK")
+        } else {
+            console.log("permissions Failed")
+        }
       } catch (error) {
-        console.error('Error requesting camera permission:', error);
+        console.error('Error requesting permissions: ', error);
       }
     };
 
